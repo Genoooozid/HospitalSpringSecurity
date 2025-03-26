@@ -1,28 +1,29 @@
 import React from "react";
 import Modal from "react-modal";
-import "bootstrap/dist/css/bootstrap.min.css"; // Asegúrate de importar Bootstrap
-import "bootstrap-icons/font/bootstrap-icons.css"; // Importa los íconos de Bootstrap
+import "bootstrap/dist/css/bootstrap.min.css"; // Importar Bootstrap
+import "bootstrap-icons/font/bootstrap-icons.css"; // Importar íconos de Bootstrap
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    width: '700px',
-    height: '400px',
-    maxWidth: '90%',
-    maxHeight: '90%',
-    padding: '20px',
-    overflow: 'auto',
-    borderRadius: '10px',
-    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    width: "700px",
+    height: "400px",
+    maxWidth: "90%",
+    maxHeight: "90%",
+    padding: "20px",
+    overflow: "auto",
+    borderRadius: "10px",
+    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+    position: "relative", // Para posicionar el botón de cerrar
   },
 };
 
-Modal.setAppElement("#root");  //<-- NO QUITAR, SI USAN EL MODAL SIEMPRE COLOCAR ESTO 
+Modal.setAppElement("#root"); // No quitar esto
 
 export function GestionPisos({ AbrirModal, cerrarModal }) {
   const pisos = [
@@ -35,41 +36,50 @@ export function GestionPisos({ AbrirModal, cerrarModal }) {
   return (
     <Modal
       isOpen={AbrirModal}
-      onRequestClose={cerrarModal}  
+      onRequestClose={cerrarModal}
       style={customStyles}
       contentLabel="Gestión de pisos"
     >
-      <h2 className="text-center">Gestión de pisos</h2>
-      <button className="btn btn-success" style={{ width: "120px", height: "30px", fontSize: "12px" }}>
+      <button
+        type="button"
+        className="btn-close"
+        onClick={cerrarModal}
+        aria-label="Close"
+        style={{ position: "absolute", right: "15px", top: "15px" }}
+      ></button>
+
+      <h2>Gestión de pisos</h2>
+
+      <button
+        className="btn btn-success mb-3"
+        style={{ width: "120px", height: "30px", fontSize: "12px" }}
+      >
         Agregar piso
       </button>
 
-      <table className="table table-borderless">
-        <thead>
-          <tr>
-            <th>Piso</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {pisos.map((piso) => (
-            <tr key={piso.id}>
-              <td>{piso.nombre}</td>
-              <td>
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => alert(`Eliminar ${piso.nombre}`)}
-                >
-                  Eliminar
-                  <i className="bi bi-trash m-2"></i>
-                </button>
-              </td>
+      <div className="d-flex justify-content-center">
+        <table className="table text-center" style={{ width: "80%", margin: "auto" }}>
+          <thead>
+            <tr>
+              <th scope="col">Piso</th>
+              <th scope="col">Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <button className="btn btn-secondary" onClick={cerrarModal}>Cerrar</button>
+          </thead>
+          <tbody>
+            {pisos.map((piso) => (
+              <tr key={piso.id}>
+                <td scope="col">{piso.nombre}</td>
+                <td scope="col">
+                  <button className="btn btn-danger btn-sm" onClick={() => alert(`Eliminar ${piso.nombre}`)}>
+                    Eliminar
+                    <i className="bi bi-trash m-2"></i>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </Modal>
   );
 }
