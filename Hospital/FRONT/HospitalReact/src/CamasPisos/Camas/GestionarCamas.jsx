@@ -1,17 +1,28 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css"; 
+import "bootstrap/dist/css/bootstrap.min.css";
 import "../CamasPisosCSS/camas.css";
 import camilla from "../assets/camilla.jpg";
-import { GestionPisos } from "../Pisos/GestionarPisos";  
+import { GestionPisos } from "../Pisos/GestionarPisos";
+import { GestionCamas } from "./GestionCama";
 
 export const Camas = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);  
-  const openModal = () => {
-    setModalIsOpen(true);  //  abrir el modal
+  const [modalPisosIsOpen, setModalPisosIsOpen] = useState(false);
+  const [modalCamasIsOpen, setModalCamasIsOpen] = useState(false);
+
+  const openPisosModal = () => {
+    setModalPisosIsOpen(true);
   };
 
-  const closeModal = () => {
-    setModalIsOpen(false);  //  cerrar el modal
+  const closePisosModal = () => {
+    setModalPisosIsOpen(false);
+  };
+
+  const openCamasModal = () => {
+    setModalCamasIsOpen(true);
+  };
+
+  const closeCamasModal = () => {
+    setModalCamasIsOpen(false);
   };
 
   return (
@@ -36,10 +47,10 @@ export const Camas = () => {
               </select>
             </div>
             <div className="g-cama-piso">
-              <button type="button" className="btn fw-normal">
+              <button type="button" className="btn fw-normal" onClick={openCamasModal}>
                 Gestionar camas
               </button>
-              <button type="button" className="btn fw-normal" onClick={openModal}>  
+              <button type="button" className="btn fw-normal" onClick={openPisosModal}>
                 Gestionar pisos
               </button>
             </div>
@@ -54,8 +65,9 @@ export const Camas = () => {
             </div>
           </div>
 
-          {/* Pasa el estado y la función para cerrar el modal a GestionPisos */}
-          {modalIsOpen && <GestionPisos AbrirModal={modalIsOpen} cerrarModal={closeModal} />}
+          {/* Modales */}
+          {modalPisosIsOpen && <GestionPisos AbrirModal={modalPisosIsOpen} cerrarModal={closePisosModal} />}
+          {modalCamasIsOpen && <GestionCamas AbrirModal={modalCamasIsOpen} cerrarModal={closeCamasModal} />}
         </div>
       </div>
     </>
